@@ -11,8 +11,13 @@ func TestParseCityLity(t *testing.T) {
 		panic(err)
 	}
 	result := ParseCityList(contents)
-	const resultSize = 470
+	const resultSize = 540
+
 	if len(result.Requests) != resultSize {
-		t.Error("request should have %d  request; but had %d", resultSize, len(result.request))
+		t.Errorf("request should have %d  request; but had %d", resultSize, len(result.Requests))
+	}
+
+	if len(result.Items) != resultSize {
+		t.Errorf("request should have %d  request; but had %d", resultSize, len(result.Items))
 	}
 }
