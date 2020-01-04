@@ -30,7 +30,7 @@ func TestParseCityLity(t *testing.T) {
 	}
 
 	for i, city := range expectedCitys {
-		if result.Items[i].(string) != city {
+		if result.Items[i].(string) != "City "+city {
 			t.Errorf("expected url #%d: %s; but was %s", i, city, result.Items[i])
 		}
 	}
