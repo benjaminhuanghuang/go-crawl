@@ -2,7 +2,7 @@ package parser
 import (
 	"regexp"
 
-	"../engine"
+	"../../engine"
 )
 // <a href="http://album.zhenai.com/u/1378263033" target="_blank">细水长流</a>
 const userRe = `<a href="(http://album.zhenai.com/u/[0-9]+)"[^>]*>([^<]+)</a>`

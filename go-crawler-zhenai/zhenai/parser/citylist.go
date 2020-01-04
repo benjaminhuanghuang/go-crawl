@@ -3,7 +3,7 @@ package parser
 import (
 	"regexp"
 
-	"../engine"
+	"../../engine"
 )
 
 const cityUrlRe = `href="(http://www.zhenai.com/zhenghun/[0-9a-z]+)"[^>]*>([^<]+)</a>`

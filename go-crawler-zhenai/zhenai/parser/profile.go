@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strconv"
 
-	"../engine"
-	"../model"
+	"../../engine"
+	"../../model"
 )
 
 //<div data-v-8b1eac0c="" class="m-btn purple">33岁</div>
