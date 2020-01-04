@@ -5,10 +5,13 @@ import (
 	"log"
 )
 
+type SimpleEngine struct {
+}
+
 /*
 Run ...
 */
-func Run(seeds ...Request) {
+func (e SimpleEngine) Run(seeds ...Request) {
 	var requests []Request
 
 	for _, r := range seeds {
@@ -19,6 +22,7 @@ func Run(seeds ...Request) {
 		r := requests[0]
 		requests = requests[1:] // remove the first request
 
+		// send request and get result
 		parseResult, err := worker(r)
 		if err != nil {
 			continue
