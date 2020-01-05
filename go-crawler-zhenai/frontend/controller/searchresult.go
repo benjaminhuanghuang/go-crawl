@@ -9,12 +9,12 @@ import (
 	"reflect"
 
 	"regexp"
+	"github.com/olivere/elastic"
 
-	"gopkg.in/olivere/elastic.v6"
-	"imooc.com/ccmouse/learngo/crawler/config"
-	"imooc.com/ccmouse/learngo/crawler/engine"
-	"imooc.com/ccmouse/learngo/crawler/frontend/model"
-	"imooc.com/ccmouse/learngo/crawler/frontend/view"
+	"../../config"
+	"../../engine"
+	"../model"
+	"../view"
 )
 
 type SearchResultHandler struct {
@@ -36,7 +36,7 @@ func CreateSearchResultHandler(
 		client: client,
 	}
 }
-
+// /search?q= 男 已购房&from
 func (h SearchResultHandler) ServeHTTP(
 	w http.ResponseWriter, req *http.Request) {
 	q := strings.TrimSpace(req.FormValue("q"))
@@ -71,8 +71,7 @@ func (h SearchResultHandler) getSearchResult(
 
 	resp, err := h.client.
 		Search(config.ElasticIndex).
-		Query(elastic.NewQueryStringQuery(
-			rewriteQueryString(q))).
+		Query(elastic.NewQueryStringQuery(rewriteQueryString(q))).
 		From(from).
 		Do(context.Background())
 
@@ -82,14 +81,11 @@ func (h SearchResultHandler) getSearchResult(
 
 	result.Hits = resp.TotalHits()
 	result.Start = from
-	result.Items = resp.Each(
-		reflect.TypeOf(engine.Item{}))
+	result.Items = resp.Each(reflect.TypeOf(engine.Item{}))
 	if result.Start == 0 {
 		result.PrevFrom = -1
 	} else {
-		result.PrevFrom =
-			(result.Start - 1) /
-				pageSize * pageSize
+		result.PrevFrom = (result.Start - 1) / pageSize * pageSize
 	}
 	result.NextFrom =
 		result.Start + len(result.Items)
