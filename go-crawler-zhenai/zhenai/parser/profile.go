@@ -14,11 +14,13 @@ var ageRe = regexp.MustCompile(`<div data-v-8b1eac0c="" class="m-btn purple">([\
 //<div data-v-8b1eac0c="" class="m-btn purple">离异</div>
 var marriageRe = regexp.MustCompile(`<div data-v-8b1eac0c="" class="m-btn purple">([\d]+)岁</div>`)
 
+var idRe = regexp.MustCompile(`<div data-v-8b1eac0c="" class="m-btn purple">([\d]+)`)
+
 /*
 ParseProfile ...
 https://album.zhenai.com/u/1280064210
 */
-func ParseProfile(contents []byte, userName string) engine.ParseResult {
+func ParseProfile(contents []byte, url string, userName string) engine.ParseResult {
 
 	profile := model.Profile{}
 	profile.Name = userName
@@ -31,7 +33,12 @@ func ParseProfile(contents []byte, userName string) engine.ParseResult {
 	profile.Marriage = extractString(contents, marriageRe)
 
 	result := engine.ParseResult{
-		Items: []interface{}{profile},
+		Items: []engine.Item{{
+			Url:     url, // passed from outside
+			Id:      extractString([]byte(url), idRe),
+			Type:    "zhenai",
+			Payload: profile,
+		}},
 	}
 	return result
 }

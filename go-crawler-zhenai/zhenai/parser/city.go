@@ -20,12 +20,13 @@ func ParseCity(contents []byte) engine.ParseResult{
 
 	for _, m := range matches {
 		name :=  string(m[2])
+		url := string(m[1])
 		// result.Items = append(result.Items, "User "+ name) // put user name to items
 		result.Requests = append(result.Requests, engine.Request{
-			URL:        string(m[1]),
+			URL:      url  ,
 			// 通过函数式编程来添加参数
 			ParserFunc: func (contents []byte) engine.ParseResult {
-				return ParseProfile(contents, name)   // 
+				return ParseProfile(contents,url, name)   // 
 			},
 		})
 	}
