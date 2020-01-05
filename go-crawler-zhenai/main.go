@@ -8,11 +8,16 @@ import (
 )
 
 func main() {
+	itemChan, err = persist.ItemServer("dating_profile")  // pass table name
+	if err != nil{
+		panic(err)
+	}
+
 	e:=engine.ConcurrentEngine{
 		// Scheduler : &scheduler.SimpleScheduler{},
 		Scheduler : &scheduler.QueuedScheduler{},
 		WorkerCount :100,
-		ItemChan: persist.ItemServer(),
+		ItemChan: itemChan,
 	}
 	
 	// Start from home page

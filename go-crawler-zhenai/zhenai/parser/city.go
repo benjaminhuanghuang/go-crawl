@@ -25,9 +25,7 @@ func ParseCity(contents []byte) engine.ParseResult{
 		result.Requests = append(result.Requests, engine.Request{
 			URL:      url  ,
 			// 通过函数式编程来添加参数
-			ParserFunc: func (contents []byte) engine.ParseResult {
-				return ParseProfile(contents,url, name)   // 
-			},
+			ParserFunc: ProfileParser(name, url),
 		})
 	}
 	// request to next page

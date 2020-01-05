@@ -31,13 +31,6 @@ func TestSave(t *testing.T) {
 			Car:        "无车",
 		},
 	}
-
-	err := save(expected)
-
-	if err != nil {
-		panic(err)
-	}
-
 	client, err := elastic.NewClient(
 		// Must trun off sniff in docker
 		elastic.SetSniff(false),
@@ -45,9 +38,14 @@ func TestSave(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+	const index = "dating_test"
+	err = save(client, index, expected)
 
+	if err != nil {
+		panic(err)
+	}
 	resp, err := client.Get().
-		Index("datiing_profile").
+		Index(index).
 		Type(expected.Type).
 		Id(expected.Id).
 		Do(context.Background())
