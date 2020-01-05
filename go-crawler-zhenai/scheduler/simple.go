@@ -24,6 +24,6 @@ func (s *SimpleScheduler) Submit(r engine.Request) {
 	}()
 }
 
-func (s *SimpleScheduler) Run(r engine.Request) {
+func (s *SimpleScheduler) Run() {
 	s.workerChan = make(chan engine.Request)
 }

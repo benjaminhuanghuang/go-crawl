@@ -4,10 +4,13 @@ import (
 
 	"../../engine"
 )
-// <a href="http://album.zhenai.com/u/1378263033" target="_blank">细水长流</a>
-const userRe = `<a href="(http://album.zhenai.com/u/[0-9]+)"[^>]*>([^<]+)</a>`
 
+// Page Url https://www.zhenai.com/zhenghun/shanghai
 
+// User link <a href="http://album.zhenai.com/u/1378263033" target="_blank">细水长流</a>
+const userRe = regexp.MustCompile(`<a href="(http://album.zhenai.com/u/[0-9]+)"[^>]*>([^<]+)</a>`）
+// Next Page <a href="http://www.zhenai.com/zhenghun/shanghai/2">下一页</a>
+const nextUrlRe = regexp.MustCompile(`<a href="(http://www.zhenai.com/zhenghun/[^"]+)"`)
 /*
 ParseCity ...
 */
@@ -25,6 +28,14 @@ func ParseCity(contents []byte) engine.ParseResult{
 			ParserFunc: func (contents []byte) engine.ParseResult {
 				return ParseProfile(contents, name)   // 
 			},
+		})
+	}
+	// request to next page
+	matches = nextUrlRe.FindAllSubmatch(contents, -1)
+	for _,m := range matches {
+		result.Requests = append(result.Requests, engine.Request{
+			URL: string(m[1])
+			ParserFunc: ParseCity,
 		})
 	}
 	return result
