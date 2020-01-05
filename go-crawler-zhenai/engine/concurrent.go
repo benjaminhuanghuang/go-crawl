@@ -69,7 +69,12 @@ func createWorker(in chan Request, out chan ParseResult, ready ReadyNotifier) {
 		}
 	}()
 }
+var visitedUrls = make(map[string]bool)
 
 func isDuplicate(url string) bool {
+	if visitedUrls[url] {
+		return true
+	}
+	visitedUrls[url] = true
 	return false
 }
