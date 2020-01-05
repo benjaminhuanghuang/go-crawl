@@ -4,14 +4,13 @@ import (
 	"os"
 	"testing"
 
-	"../..//engine"
+	"../../engine"
+	common "../../model"
 	"../model"
-	common "imooc.com/ccmouse/learngo/crawler/model"
 )
 
 func TestSearchResultView_Render(t *testing.T) {
-	view := CreateSearchResultView(
-		"template.html")
+	view := CreateSearchResultView("template.html")
 
 	out, err := os.Create("template.test.html")
 	if err != nil {
