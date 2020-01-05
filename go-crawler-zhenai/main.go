@@ -4,6 +4,7 @@ import (
 	"./engine"
 	"./scheduler"
 	"./zhenai/parser"
+	"./persist"
 )
 
 func main() {
@@ -11,6 +12,7 @@ func main() {
 		// Scheduler : &scheduler.SimpleScheduler{},
 		Scheduler : &scheduler.QueuedScheduler{},
 		WorkerCount :100,
+		ItemChan: persist.ItemServer(),
 	}
 	
 	// Start from home page
