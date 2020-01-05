@@ -3,25 +3,40 @@ package scheduler
 import (
 	"../engine"
 )
-
+/*
+QueuedScheduler ...
+*/
 type QueuedScheduler struct {
 	requestChan chan engine.Request
 	workerChan chan chan engine.Request
 }
 
+func (s *QueuedScheduler) WorkerChan() chan engine.Request{
+	return make(chan engine.Request) 
+}
+
+/*
+Submit ...
+*/
 func (s *QueuedScheduler) Submit(r engine.Request) {
 	s.requestChan <- r
 }
-
+/*
+WorkerReady ...
+*/
 func (s *QueuedScheduler) WorkerReady(w chan engine.Request){
 	s.workerChan <- w 
 }
-
+/*
+ConfigureMasterWorkerChan ...
+*/
 func (s *QueuedScheduler) ConfigureMasterWorkerChan(r chan engine.Request) {
 }
 
 
-
+/*
+Run ...
+*/
 func (s *QueuedScheduler) Run(){
 	s.workerChan = make(chan chan engine.Request)
 	s.requestChan = make(chan engine.Request)
