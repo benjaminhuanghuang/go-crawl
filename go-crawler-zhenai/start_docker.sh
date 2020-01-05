@@ -1,0 +1,1 @@
+docker run -d -p 9200:9200 elasticsearch:6.5.0
