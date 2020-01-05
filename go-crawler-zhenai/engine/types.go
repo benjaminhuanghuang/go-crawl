@@ -13,9 +13,15 @@ ParseResult ...
 */
 type ParseResult struct {
 	Requests []Request
-	Items    []interface{}
+	Items    []Item
 }
 
+type Item struct{
+	Url string
+	Id string
+	Type string
+	Payload interface{}
+}
 /*
 NilParser ...
 */
