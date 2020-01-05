@@ -1,0 +1,19 @@
+### Test elastic
+GET http://localhost:9200 HTTP/1.1
+content-type: application/json
+
+### elastic: create
+PUT http://localhost:9200/imooc/course/1
+content-type: application/json
+
+{
+  "name":"test"
+}
+
+### elastic: query
+GET http://localhost:9200/imooc/course/1 HTTP/1.1
+content-type: application/json
+
+###  elastic: Search all
+GET http://localhost:9200/imooc/course/_search HTTP/1.1
+content-type: application/json
